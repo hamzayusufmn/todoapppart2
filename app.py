@@ -9,18 +9,15 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///games.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-# Define the Game model with at least 4 fields
+
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(200), nullable=False)
-    platform = db.Column(db.String(100))
-    progress = db.Column(db.String(100))  # e.g., "Level 3" or "50% complete"
+    title = db.Column(db.String(200), nullable=False)  
     completed = db.Column(db.Boolean, default=False)
-    rating = db.Column(db.Integer)  # 1-5 stars
     started_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
-        return f' <Game id={self.id} title={self.title} platform={self.platform} completed={self.completed}>'
+        return f' <Game id={self.id} title={self.title} completed={self.completed} started_at={self.started_at}>'
     # asked professer the main reason for code, but based on resarch used during debugging and developing app
 
 # Create the database and tables
@@ -37,15 +34,12 @@ def index():
 @app.route('/add', methods=['POST'])
 def add():
     title = request.form.get('title')
-    platform = request.form.get('platform')
-    progress = request.form.get('progress')
+
     
     if title:  #  validation for title
         new_game = Game(
-            title=title,
-            platform=platform,
-            progress=progress
-        )
+            title=title )
+
         db.session.add(new_game)
         db.session.commit()
     return redirect(url_for('index'))
