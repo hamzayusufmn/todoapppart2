@@ -50,7 +50,7 @@ def add():
         db.session.commit()
     return redirect(url_for('index'))
 
-# Route to toggle game completion status and will appear on webpage as a completed click
+#  game completion status and will appear on webpage as a completed click
 @app.route('/toggle/<int:game_id>')
 def toggle(game_id):
     game = Game.query.get_or_404(game_id)
@@ -59,7 +59,7 @@ def toggle(game_id):
     return redirect(url_for('index'))
 
 
-# Route to delete a game entry if user enters wrong thing or wants to delete it
+#  delete a game entry if user enters wrong thing or wants to delete it
 @app.route('/delete/<int:game_id>')
 def delete(game_id):
     game = Game.query.get_or_404(game_id)
